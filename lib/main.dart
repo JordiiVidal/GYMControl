@@ -24,12 +24,55 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  VoidCallback _showPersBottomSheetCallBack;
+
   Icon _icon = Icon(
     Icons.play_arrow,
     size: 45.0,
   );
   int _kilos = 0;
   bool state = false;
+
+  void initState() {
+    super.initState();
+    _showPersBottomSheetCallBack = _showBottomSheet;
+  }
+
+  void _showBottomSheet() {
+    setState(() {
+      _showPersBottomSheetCallBack = null;
+    });
+
+    _scaffoldKey.currentState
+        .showBottomSheet((context) {
+          return Container(
+            height: 300.0,
+            color: Colors.red,
+            child: Center(child: Text('sasas')),
+          );
+        })
+        .closed
+        .whenComplete(() {
+          if (mounted) {
+            setState(() {
+              _showPersBottomSheetCallBack = _showBottomSheet;
+            });
+          }
+        });
+  }
+
+  void _showModalSheet() {
+    showModalBottomSheet(
+        context: context,
+        builder: (builder) {
+          return Container(
+            height: 300.0,
+            color: Colors.red,
+            child: Center(child: Text('sasas')),
+          );
+        });
+  }
 
   Widget _containerStart() {
     return Container(
@@ -68,6 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text(widget.title),
       ),
@@ -91,51 +135,48 @@ class _MyHomePageState extends State<MyHomePage> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                   child: ListTile(
-                  leading: FlatButton(
-                    child: _icon,
-                    onPressed: () {
-                      if (state) {
-                        setState(() {
-                          state = false;
-                          _icon = Icon(
-                            Icons.play_arrow,
-                            size: 45.0,
-                          );
-                        });
-                      } else {
-                        setState(() {
-                          state = true;
-                          _icon = Icon(
-                            Icons.stop,
-                            size: 45.0,
-                          );
-                        });
-                      }
-                    },
-                  ),
-                  subtitle: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text('Repeticiones'),
-                      Text('Series'),
-                      Text('tiempo')
-                    ],
-                  ),
-                  title: Text('Nombre'),
-                  trailing: GestureDetector(
-                    onHorizontalDragDown: (DragDownDetails detail) {
-                      print(detail);
-                    },
-                    child: CircleAvatar(
-                      backgroundColor: Theme.of(context).primaryColor,
-                      child: Text(
-                        '$_kilos kg',
-                        style: TextStyle(color: Colors.white),
+                    onTap: _showModalSheet,
+                    leading: FlatButton(
+                      child: _icon,
+                      onPressed: () {
+                        if (state) {
+                          setState(() {
+                            state = false;
+                            _icon = Icon(
+                              Icons.play_arrow,
+                              size: 45.0,
+                            );
+                          });
+                        } else {
+                          setState(() {
+                            state = true;
+                            _icon = Icon(
+                              Icons.stop,
+                              size: 45.0,
+                            );
+                          });
+                        }
+                      },
+                    ),
+                    subtitle: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[Text('Repeticiones'), Text('12')],
+                    ),
+                    title: Text('Nombre'),
+                    trailing: GestureDetector(
+                      onHorizontalDragDown: (DragDownDetails detail) {
+                        print(detail);
+                      },
+                      child: CircleAvatar(
+                        backgroundColor: Theme.of(context).primaryColor,
+                        child: Text(
+                          '$_kilos kg',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        radius: 30.0,
                       ),
-                      radius: 30.0,
                     ),
                   ),
-                ),
                 ),
                 state ? _containerStart() : Container()
               ],
