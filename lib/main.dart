@@ -35,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
         actualSeries: 0,
         recoveryTime: false,
         repetitions: 12,
-        icon: Icon(Icons.play_arrow, size: 40.0)),
+        icon: Icon(Icons.fitness_center, size: 40.0)),
     Exercice(
         name: 'Press de banca',
         weight: 45,
@@ -44,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
         actualSeries: 0,
         recoveryTime: false,
         repetitions: 12,
-        icon: Icon(Icons.play_arrow, size: 40.0)),
+        icon: Icon(Icons.fitness_center, size: 40.0)),
     Exercice(
         name: 'Press de banca',
         weight: 45,
@@ -53,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
         actualSeries: 0,
         recoveryTime: false,
         repetitions: 12,
-        icon: Icon(Icons.play_arrow, size: 40.0)),
+        icon: Icon(Icons.fitness_center, size: 40.0)),
     Exercice(
         name: 'Press de banca',
         weight: 45,
@@ -62,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
         actualSeries: 0,
         recoveryTime: false,
         repetitions: 12,
-        icon: Icon(Icons.play_arrow, size: 40.0)),
+        icon: Icon(Icons.fitness_center, size: 40.0)),
     Exercice(
         name: 'Press de banca',
         weight: 45,
@@ -71,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
         actualSeries: 0,
         recoveryTime: false,
         repetitions: 12,
-        icon: Icon(Icons.play_arrow, size: 40.0)),
+        icon: Icon(Icons.fitness_center, size: 40.0)),
     Exercice(
         name: 'Press de banca',
         weight: 45,
@@ -80,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
         actualSeries: 0,
         recoveryTime: false,
         repetitions: 12,
-        icon: Icon(Icons.play_arrow, size: 40.0)),
+        icon: Icon(Icons.fitness_center, size: 40.0)),
     Exercice(
         name: 'Press de banca',
         weight: 45,
@@ -89,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
         actualSeries: 0,
         recoveryTime: false,
         repetitions: 12,
-        icon: Icon(Icons.play_arrow, size: 40.0)),
+        icon: Icon(Icons.fitness_center, size: 40.0)),
     Exercice(
         name: 'Press de banca',
         weight: 45,
@@ -98,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
         actualSeries: 0,
         recoveryTime: false,
         repetitions: 12,
-        icon: Icon(Icons.play_arrow, size: 40.0)),
+        icon: Icon(Icons.fitness_center, size: 40.0)),
     Exercice(
         name: 'Press de banca',
         weight: 45,
@@ -107,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
         actualSeries: 0,
         recoveryTime: false,
         repetitions: 12,
-        icon: Icon(Icons.play_arrow, size: 40.0)),
+        icon: Icon(Icons.fitness_center, size: 40.0)),
     Exercice(
         name: 'Press de banca',
         weight: 45,
@@ -116,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
         actualSeries: 0,
         recoveryTime: false,
         repetitions: 12,
-        icon: Icon(Icons.play_arrow, size: 40.0))
+        icon: Icon(Icons.fitness_center, size: 40.0))
   ];
 
   _showModalSheet(BuildContext context, int index) {
@@ -150,12 +150,12 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _containerStart(int index) {
     return Container(
       padding: EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
-      color: Theme.of(context).accentColor,
+      color: Colors.blue[600],
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           CircleAvatar(
-            backgroundColor: Colors.grey[200],
+            backgroundColor: Colors.grey[100],
             radius: 40.0,
             child: Text(
               '00.00',
@@ -190,89 +190,146 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _itemList(BuildContext context, int index) {
     return Container(
       decoration: BoxDecoration(
-          color: Colors.grey[200],
-          border: BorderDirectional(
-            top: BorderSide(
-              color: Colors.grey[300],
-              width: 1.0,
-            ),
-            bottom: BorderSide(
-              color: Colors.grey[300],
-              width: 1.0,
-            ),
-          )),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: Colors.black38,
+            offset: Offset(1.0, 3.0),
+            blurRadius: 5.0,
+          ),
+        ],
+        color: Colors.white,
+        border: BorderDirectional(
+          bottom: BorderSide(
+            color: Colors.grey[200],
+            width: 1.0,
+          ),
+        ),
+      ),
       child: Column(
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-            child: ListTile(
-              onTap: () {
-                _showModalSheet(context, index);
-              },
-              leading: FlatButton(
-                child: list[index].icon,
-                onPressed: () {
-                  print('click');
-                  if (list[index].start) {
-                    setState(() {
-                      list[index].start = false;
-                      list[index].icon = Icon(
-                        Icons.play_arrow,
-                        size: 40.0,
-                      );
-                    });
-                  } else {
-                    setState(() {
-                      list[index].start = true;
-                      list[index].icon = Icon(
-                        Icons.stop,
-                        size: 40.0,
-                      );
-                    });
-                  }
-                },
-              ),
-              subtitle: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Text(
-                    list[index].repetitions.toString(),
-                    style: TextStyle(fontSize: 21.0),
+          ListTile(
+            onTap: () {
+              _showModalSheet(context, index);
+            },
+            subtitle: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 10.0),
+                  child: FlatButton(
+                    child: new Image(
+                      image: new AssetImage("assets/gym_07.png"),
+                      width: 40.0,
+                      height: 40.0,
+                      color: null,
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.bottomLeft,
+                    ),
+                    onPressed: () {
+                      print('click');
+                      if (list[index].start) {
+                        setState(() {
+                          list[index].start = false;
+                          list[index].icon = Icon(
+                            Icons.fitness_center,
+                            size: 40.0,
+                          );
+                        });
+                      } else {
+                        setState(() {
+                          list[index].start = true;
+                          list[index].icon = Icon(
+                            Icons.stop,
+                            size: 40.0,
+                          );
+                        });
+                      }
+                    },
                   ),
-                  Text(
-                    'rep',
-                    style: TextStyle(fontSize: 10.0),
-                  )
-                ],
-              ),
-              title: Text(list[index].name),
-              trailing: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    list[index].weight = list[index].weight + 2;
-                  });
-                },
-                onLongPress: () {
-                  setState(() {
-                    list[index].weight = 0;
-                  });
-                },
-                child: CircleAvatar(
-                  backgroundColor: Theme.of(context).primaryColor,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        list[index].weight.toString(),
-                        style: TextStyle(color: Colors.white),
+                ),
+                RichText(
+                  text: TextSpan(
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(text: list[index].series.toString()),
+                      TextSpan(
+                        text: ' series ',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w300,
+                            fontSize: 12.0,
+                            color: Colors.grey[700]),
                       ),
-                      Text(
-                        'kg',
-                        style: TextStyle(color: Colors.white, fontSize: 10.0),
+                      TextSpan(text: list[index].repetitions.toString()),
+                      TextSpan(
+                        text: ' rep',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w300,
+                            fontSize: 12.0,
+                            color: Colors.grey[700]),
                       ),
                     ],
                   ),
-                  radius: 30.0,
+                )
+              ],
+            ),
+            title: Padding(
+              padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 5.0),
+              child: Text(
+                list[index].name,
+                style: TextStyle(
+                    fontSize: 18.0,
+                    color: Colors.black54,
+                    fontWeight: FontWeight.w300),
+              ),
+            ),
+            trailing: GestureDetector(
+              onTap: () {
+                setState(() {
+                  list[index].weight = list[index].weight + 1;
+                });
+              },
+              onLongPress: () {
+                setState(() {
+                  list[index].weight = 0;
+                });
+              },
+              child: Container(
+                padding: EdgeInsets.all(20.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100.0),
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(
+                      color: Colors.black12,
+                      offset: Offset(1.0, 1.0),
+                      blurRadius: 2.0,
+                    ),
+                  ],
+                  color: Colors.white,
+                ),
+                child: RichText(
+                  text: TextSpan(
+                    style: TextStyle(
+                      fontSize: 40.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: list[index].weight.toString(),
+                      ),
+                      TextSpan(
+                        text: ' kg',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w300,
+                            fontSize: 10.0,
+                            color: Colors.grey[700]),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -287,9 +344,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
       body: ListView.builder(
         itemBuilder: _itemList,
         scrollDirection: Axis.vertical,
@@ -300,7 +354,7 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).primaryColor,
         tooltip: 'Increment',
         child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }
