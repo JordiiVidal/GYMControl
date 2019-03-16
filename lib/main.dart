@@ -45,78 +45,6 @@ class _MyHomePageState extends State<MyHomePage> {
         recoveryTime: false,
         repetitions: 12,
         icon: Icon(Icons.fitness_center, size: 40.0)),
-    Exercice(
-        name: 'Press de banca',
-        weight: 45,
-        start: false,
-        series: 4,
-        actualSeries: 0,
-        recoveryTime: false,
-        repetitions: 12,
-        icon: Icon(Icons.fitness_center, size: 40.0)),
-    Exercice(
-        name: 'Press de banca',
-        weight: 45,
-        start: false,
-        series: 4,
-        actualSeries: 0,
-        recoveryTime: false,
-        repetitions: 12,
-        icon: Icon(Icons.fitness_center, size: 40.0)),
-    Exercice(
-        name: 'Press de banca',
-        weight: 45,
-        start: false,
-        series: 4,
-        actualSeries: 0,
-        recoveryTime: false,
-        repetitions: 12,
-        icon: Icon(Icons.fitness_center, size: 40.0)),
-    Exercice(
-        name: 'Press de banca',
-        weight: 45,
-        start: false,
-        series: 4,
-        actualSeries: 0,
-        recoveryTime: false,
-        repetitions: 12,
-        icon: Icon(Icons.fitness_center, size: 40.0)),
-    Exercice(
-        name: 'Press de banca',
-        weight: 45,
-        start: false,
-        series: 4,
-        actualSeries: 0,
-        recoveryTime: false,
-        repetitions: 12,
-        icon: Icon(Icons.fitness_center, size: 40.0)),
-    Exercice(
-        name: 'Press de banca',
-        weight: 45,
-        start: false,
-        series: 4,
-        actualSeries: 0,
-        recoveryTime: false,
-        repetitions: 12,
-        icon: Icon(Icons.fitness_center, size: 40.0)),
-    Exercice(
-        name: 'Press de banca',
-        weight: 45,
-        start: false,
-        series: 4,
-        actualSeries: 0,
-        recoveryTime: false,
-        repetitions: 12,
-        icon: Icon(Icons.fitness_center, size: 40.0)),
-    Exercice(
-        name: 'Press de banca',
-        weight: 45,
-        start: false,
-        series: 4,
-        actualSeries: 0,
-        recoveryTime: false,
-        repetitions: 12,
-        icon: Icon(Icons.fitness_center, size: 40.0))
   ];
 
   _showModalSheet(BuildContext context, int index) {
@@ -149,42 +77,90 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _containerStart(int index) {
     return Container(
-      padding: EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
-      color: Colors.blue[600],
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          CircleAvatar(
-            backgroundColor: Colors.grey[100],
-            radius: 40.0,
-            child: Text(
-              '00.00',
-              style: TextStyle(color: Colors.black, fontSize: 20.0),
+        padding: EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
+        decoration: BoxDecoration(
+            border: BorderDirectional(
+                top: BorderSide(color: Colors.grey[100], width: 2.0))),
+        child: Column(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.all(3.0),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100.0),
+                      border: Border.all(width: 2.0, color: Colors.grey[300])),
+                  child: GestureDetector(
+                    onTap: () {
+                      print('Empezar descanso');
+                    },
+                    child: CircleAvatar(
+                      backgroundColor: Colors.grey[200],
+                      radius: 50.0,
+                      child: Text(
+                        '00.00',
+                        style: TextStyle(color: Colors.black87, fontSize: 25.0),
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  child: Text(
+                    list[index].actualSeries.toString() +
+                        ' / ' +
+                        list[index].series.toString(),
+                    style: TextStyle(color: Colors.black, fontSize: 30.0),
+                  ),
+                ),
+                FloatingActionButton(
+                  onPressed: () {
+                    setState(() {
+                      list[index].aumentarSeries();
+                    });
+                  },
+                  backgroundColor: Color(0xffDB274A),
+                  child: Text(
+                    '+1',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 19.0,
+                        fontWeight: FontWeight.w400),
+                  ),
+                )
+              ],
             ),
-          ),
-          Container(
-            child: Text(
-              list[index].actualSeries.toString() +
-                  ' / ' +
-                  list[index].series.toString(),
-              style: TextStyle(color: Colors.white, fontSize: 20.0),
+            Padding(
+              padding: EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 5.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Text(
+                    'Tiempo de Descanso',
+                    style: TextStyle(
+                        fontSize: 15.0,
+                        color: Colors.black54,
+                        fontWeight: FontWeight.w300),
+                  ),
+                  Text(
+                    'Serie Actual',
+                    style: TextStyle(
+                        fontSize: 15.0,
+                        color: Colors.black54,
+                        fontWeight: FontWeight.w300),
+                  ),
+                  Text(
+                    'Aumentar Serie',
+                    style: TextStyle(
+                        fontSize: 15.0,
+                        color: Colors.black54,
+                        fontWeight: FontWeight.w300),
+                  ),
+                ],
+              ),
             ),
-          ),
-          FloatingActionButton(
-            onPressed: () {
-              setState(() {
-                list[index].aumentarSeries();
-              });
-            },
-            backgroundColor: Colors.grey[200],
-            child: Text(
-              '+1',
-              style: TextStyle(color: Colors.black),
-            ),
-          )
-        ],
-      ),
-    );
+          ],
+        ));
   }
 
   Widget _itemList(BuildContext context, int index) {
@@ -250,7 +226,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 RichText(
                   text: TextSpan(
                     style: TextStyle(
-                      fontSize: 18.0,
+                      fontSize: 21.0,
                       color: Colors.black,
                       fontWeight: FontWeight.w400,
                     ),
@@ -260,7 +236,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         text: ' series ',
                         style: TextStyle(
                             fontWeight: FontWeight.w300,
-                            fontSize: 12.0,
+                            fontSize: 14.0,
                             color: Colors.grey[700]),
                       ),
                       TextSpan(text: list[index].repetitions.toString()),
@@ -268,7 +244,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         text: ' rep',
                         style: TextStyle(
                             fontWeight: FontWeight.w300,
-                            fontSize: 12.0,
+                            fontSize: 14.0,
                             color: Colors.grey[700]),
                       ),
                     ],
@@ -300,20 +276,14 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Container(
                 padding: EdgeInsets.all(20.0),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100.0),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                      color: Colors.black12,
-                      offset: Offset(1.0, 1.0),
-                      blurRadius: 2.0,
-                    ),
-                  ],
+                  border: BorderDirectional(
+                      start: BorderSide(width: 1.0, color: Colors.grey[400])),
                   color: Colors.white,
                 ),
                 child: RichText(
                   text: TextSpan(
                     style: TextStyle(
-                      fontSize: 40.0,
+                      fontSize: 30.0,
                       color: Colors.black,
                       fontWeight: FontWeight.w400,
                     ),
@@ -344,6 +314,11 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
+      appBar: AppBar(
+        backgroundColor: Color(0xffDB274A),
+        title: Text('GYMControl'),
+        centerTitle: true,
+      ),
       body: ListView.builder(
         itemBuilder: _itemList,
         scrollDirection: Axis.vertical,
