@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'models/exercice.dart';
+import 'dart:math' as math;
 
 void main() => runApp(new MyApp());
 
@@ -23,28 +24,40 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => new _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  AnimationController controller;
+
+  String get timerString {
+    Duration duration = controller.duration * controller.value;
+    return '${duration.inMinutes}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
+  }
+
+  void initState() {
+    super.initState();
+    controller =
+        AnimationController(vsync: this, duration: Duration(seconds: 180));
+  }
 
   List<Exercice> list = [
     Exercice(
-        name: 'Press de banca',
-        weight: 45,
-        start: false,
-        series: 4,
-        actualSeries: 0,
-        recoveryTime: false,
-        repetitions: 12,
-        icon: Icon(Icons.fitness_center, size: 40.0)),
+      name: 'Press de banca',
+      weight: 45.0,
+      start: false,
+      series: 4,
+      actualSeries: 0,
+      recoveryTime: false,
+      repetitions: 12,
+    ),
     Exercice(
-        name: 'Press de banca',
-        weight: 45,
-        start: false,
-        series: 4,
-        actualSeries: 0,
-        recoveryTime: false,
-        repetitions: 12,
-        icon: Icon(Icons.fitness_center, size: 40.0)),
+      name: 'Press de banca',
+      weight: 32.0,
+      start: false,
+      series: 4,
+      actualSeries: 0,
+      recoveryTime: false,
+      repetitions: 12,
+    ),
   ];
 
   _showModalSheet(BuildContext context, int index) {
@@ -83,28 +96,25 @@ class _MyHomePageState extends State<MyHomePage> {
                 top: BorderSide(color: Colors.grey[100], width: 2.0))),
         child: Column(
           children: <Widget>[
+            timerExercice(),
+            Padding(
+              padding: EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'Tiempo Descanso',
+                    style: TextStyle(
+                        fontSize: 15.0,
+                        color: Colors.black54,
+                        fontWeight: FontWeight.w300),
+                  ),
+                ],
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                Container(
-                  padding: EdgeInsets.all(3.0),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100.0),
-                      border: Border.all(width: 2.0, color: Colors.grey[300])),
-                  child: GestureDetector(
-                    onTap: () {
-                      print('Empezar descanso');
-                    },
-                    child: CircleAvatar(
-                      backgroundColor: Colors.grey[200],
-                      radius: 50.0,
-                      child: Text(
-                        '00.00',
-                        style: TextStyle(color: Colors.black87, fontSize: 25.0),
-                      ),
-                    ),
-                  ),
-                ),
                 Container(
                   child: Text(
                     list[index].actualSeries.toString() +
@@ -116,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 FloatingActionButton(
                   onPressed: () {
                     setState(() {
-                      list[index].aumentarSeries();
+                      list[index].increaseSeries();
                     });
                   },
                   backgroundColor: Color(0xffDB274A),
@@ -136,13 +146,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   Text(
-                    'Tiempo de Descanso',
-                    style: TextStyle(
-                        fontSize: 15.0,
-                        color: Colors.black54,
-                        fontWeight: FontWeight.w300),
-                  ),
-                  Text(
                     'Serie Actual',
                     style: TextStyle(
                         fontSize: 15.0,
@@ -161,6 +164,65 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ));
+  }
+
+  Widget timerExercice() {
+    return Container(
+      height: 180.0,
+      child: Align(
+        alignment: FractionalOffset.center,
+        child: AspectRatio(
+          aspectRatio: 1.0,
+          child: GestureDetector(
+            onTap: () {
+              if (controller.isAnimating) {
+                controller.stop();
+              } else {
+                controller.reverse(
+                    from: controller.value == 0.0 ? 1.0 : controller.value);
+              }
+            },
+            child: Stack(
+              children: <Widget>[
+                Positioned.fill(
+                  child: AnimatedBuilder(
+                    animation: controller,
+                    builder: (BuildContext context, Widget child) {
+                      return CustomPaint(
+                        painter: TimerPainter(
+                          animation: controller,
+                          backgroundColor: Colors.grey[200],
+                          color: Color(0xffDB274A),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                Align(
+                  alignment: FractionalOffset.center,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      AnimatedBuilder(
+                        animation: controller,
+                        builder: (BuildContext context, Widget child) {
+                          return Text(
+                            timerString,
+                            style: TextStyle(
+                                fontSize: 50.0, fontWeight: FontWeight.w200),
+                          );
+                        },
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _itemList(BuildContext context, int index) {
@@ -206,18 +268,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       if (list[index].start) {
                         setState(() {
                           list[index].start = false;
-                          list[index].icon = Icon(
-                            Icons.fitness_center,
-                            size: 40.0,
-                          );
                         });
                       } else {
                         setState(() {
                           list[index].start = true;
-                          list[index].icon = Icon(
-                            Icons.stop,
-                            size: 40.0,
-                          );
                         });
                       }
                     },
@@ -262,44 +316,32 @@ class _MyHomePageState extends State<MyHomePage> {
                     fontWeight: FontWeight.w300),
               ),
             ),
-            trailing: GestureDetector(
-              onTap: () {
-                setState(() {
-                  list[index].weight = list[index].weight + 1;
-                });
-              },
-              onLongPress: () {
-                setState(() {
-                  list[index].weight = 0;
-                });
-              },
-              child: Container(
-                padding: EdgeInsets.all(20.0),
-                decoration: BoxDecoration(
-                  border: BorderDirectional(
-                      start: BorderSide(width: 1.0, color: Colors.grey[400])),
-                  color: Colors.white,
-                ),
-                child: RichText(
-                  text: TextSpan(
-                    style: TextStyle(
-                      fontSize: 30.0,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w400,
-                    ),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: list[index].weight.toString(),
-                      ),
-                      TextSpan(
-                        text: ' kg',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 10.0,
-                            color: Colors.grey[700]),
-                      ),
-                    ],
+            trailing: Container(
+              padding: EdgeInsets.all(20.0),
+              decoration: BoxDecoration(
+                border: BorderDirectional(
+                    start: BorderSide(width: 1.0, color: Colors.grey[400])),
+                color: Colors.white,
+              ),
+              child: RichText(
+                text: TextSpan(
+                  style: TextStyle(
+                    fontSize: 30.0,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w400,
                   ),
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: list[index].weight.toString(),
+                    ),
+                    TextSpan(
+                      text: ' kg',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w300,
+                          fontSize: 10.0,
+                          color: Colors.grey[700]),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -326,10 +368,44 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => {},
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Color(0xffDB274A),
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),
     );
+  }
+}
+
+class TimerPainter extends CustomPainter {
+  TimerPainter({
+    this.animation,
+    this.backgroundColor,
+    this.color,
+  }) : super(repaint: animation);
+
+  final Animation<double> animation;
+  final Color backgroundColor, color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint paint = Paint()
+      ..color = backgroundColor
+      ..strokeWidth = 2.0
+      ..strokeCap = StrokeCap.round
+      ..style = PaintingStyle.stroke;
+
+    canvas.drawCircle(size.center(Offset.zero), size.width / 2.0, paint);
+    paint.color = color;
+
+    double progress = (1.0 - animation.value) * 2 * math.pi;
+
+    canvas.drawArc(Offset.zero & size, math.pi * 1.5, -progress, false, paint);
+  }
+
+  @override
+  bool shouldRepaint(TimerPainter old) {
+    return animation.value != old.animation.value ||
+        color != old.color ||
+        backgroundColor != old.backgroundColor;
   }
 }

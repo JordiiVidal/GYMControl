@@ -7,18 +7,27 @@ class Exercice{
   int repetitions;
   int series;
   int actualSeries;
-  int weight;
+  double weight;
   bool start;
   bool recoveryTime;
-  Icon icon;
 
-  Exercice({ @required this.name, @required this.weight, @required this.repetitions, @required this.series,@required this.actualSeries,@required this.start, @required this.recoveryTime, @required this.icon});
+  Exercice({ @required this.name, @required this.weight, @required this.repetitions, @required this.series,@required this.actualSeries,@required this.start, @required this.recoveryTime});
 
-  void aumentarSeries(){
+  void increaseSeries(){
     if(this.actualSeries < this.series){
       this.actualSeries++;
     }else{
       print('fin');
+    }
+  }
+
+  void increaseWeight(){
+    this.weight += 0.5;
+  }
+
+  void decreaseWeight(){
+    if(this.weight > 0){
+      this.weight -= 0.5;
     }
   }
 }
