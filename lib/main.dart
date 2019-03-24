@@ -127,6 +127,10 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   onPressed: () {
                     setState(() {
                       list[index].increaseSeries();
+                      controller.reset();
+                      controller.reverse(
+                          from:
+                              controller.value == 0.0 ? 1.0 : controller.value);
                     });
                   },
                   backgroundColor: Color(0xffDB274A),
