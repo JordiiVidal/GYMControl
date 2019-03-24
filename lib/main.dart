@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'models/exercice.dart';
 import 'dart:math' as math;
+import 'tools/text.dart';
 
 void main() => runApp(new MyApp());
 
@@ -42,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   List<Exercice> list = [
     Exercice(
       name: 'Press de banca',
-      weight: 45.0,
+      weight: 45.5,
       start: false,
       series: 4,
       actualSeries: 0,
@@ -336,7 +337,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   ),
                   children: <TextSpan>[
                     TextSpan(
-                      text: list[index].weight.toString(),
+                      text: weightNumber(list[index].weight),
                     ),
                     TextSpan(
                       text: ' kg',
