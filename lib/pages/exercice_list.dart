@@ -5,7 +5,6 @@ import '../widgets/helpers/models.dart';
 import '../widgets/exercice/recovery_time.dart';
 
 class ExerciceListPage extends StatefulWidget {
-
   final List<Exercice> list;
 
   ExerciceListPage(this.list);
@@ -17,15 +16,10 @@ class ExerciceListPage extends StatefulWidget {
   }
 }
 
-class _ExerciceListPageState extends State<ExerciceListPage> with TickerProviderStateMixin {
+class _ExerciceListPageState extends State<ExerciceListPage>
+    with TickerProviderStateMixin {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-
   AnimationController controller;
-
-  String get timerString {
-    Duration duration = controller.duration * controller.value;
-    return '${duration.inMinutes}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
-  }
 
   void initState() {
     super.initState();
@@ -35,84 +29,12 @@ class _ExerciceListPageState extends State<ExerciceListPage> with TickerProvider
 
   Widget _containerStart(int index) {
     return Container(
-        padding: EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
-        decoration: BoxDecoration(
-            border: BorderDirectional(
-                top: BorderSide(color: Colors.grey[100], width: 2.0))),
-        child: Column(
-          children: <Widget>[
-            RecoveryTime(controller, timerString),
-            Padding(
-              padding: EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'Tiempo Descanso',
-                    style: TextStyle(
-                        fontSize: 15.0,
-                        color: Colors.black54,
-                        fontWeight: FontWeight.w300),
-                  ),
-                ],
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Container(
-                  child: Text(
-                    widget.list[index].actualSeries.toString() +
-                        ' / ' +
-                        widget.list[index].series.toString(),
-                    style: TextStyle(color: Colors.black, fontSize: 30.0),
-                  ),
-                ),
-                FloatingActionButton(
-                  onPressed: () {
-                    setState(() {
-                      widget.list[index].increaseSeries();
-                      controller.reset();
-                      controller.reverse(
-                          from:
-                              controller.value == 0.0 ? 1.0 : controller.value);
-                    });
-                  },
-                  backgroundColor: Color(0xffDB274A),
-                  child: Text(
-                    '+1',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 19.0,
-                        fontWeight: FontWeight.w400),
-                  ),
-                )
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 5.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Text(
-                    'Serie Actual',
-                    style: TextStyle(
-                        fontSize: 15.0,
-                        color: Colors.black54,
-                        fontWeight: FontWeight.w300),
-                  ),
-                  Text(
-                    'Aumentar Serie',
-                    style: TextStyle(
-                        fontSize: 15.0,
-                        color: Colors.black54,
-                        fontWeight: FontWeight.w300),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ));
+      padding: EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
+      decoration: BoxDecoration(
+          border: BorderDirectional(
+              top: BorderSide(color: Colors.grey[100], width: 2.0))),
+      child: RecoveryTime(widget.list, index, controller),
+    );
   }
 
   Widget _itemList(BuildContext context, int index) {
@@ -154,11 +76,12 @@ class _ExerciceListPageState extends State<ExerciceListPage> with TickerProvider
                       alignment: Alignment.bottomLeft,
                     ),
                     onPressed: () {
-                      print('click');
                       if (widget.list[index].start) {
-                        setState(() {
-                          widget.list[index].start = false;
-                        });
+                        if (mounted) {
+                          setState(() {
+                            widget.list[index].start = false;
+                          });
+                        }
                       } else {
                         setState(() {
                           widget.list[index].start = true;
