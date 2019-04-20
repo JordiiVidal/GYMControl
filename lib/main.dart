@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'models/exercice.dart';
 import 'pages/exercice_list.dart';
+import 'pages/exercice_create.dart';
+
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatefulWidget{
-  
+class MyApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return _MyAppState();
   }
-
 }
-class _MyAppState extends State<MyApp>{
 
+class _MyAppState extends State<MyApp> {
   List<Exercice> list = [
     Exercice(
       name: 'Press de banca',
@@ -41,7 +41,10 @@ class _MyAppState extends State<MyApp>{
       title: 'GymControl',
       theme: ThemeData(
           primaryColor: Colors.teal[800], accentColor: Colors.teal[700]),
-      home: ExerciceListPage(list),
+      routes: {
+        '/': (BuildContext context) => ExerciceListPage(list),
+        '/create': (BuildContext context) => ExerciceCreate(),
+      },
     );
   }
 }

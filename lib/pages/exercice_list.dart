@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/exercice.dart';
 import '../widgets/helpers/models.dart';
 import '../widgets/exercice/recovery_time.dart';
-import '../tools/text.dart';
+import '../pages/exercice_create.dart';
 
 class ExerciceListPage extends StatefulWidget {
   final List<Exercice> list;
@@ -62,6 +62,7 @@ class _ExerciceListPageState extends State<ExerciceListPage>
               modalImageExercice(context, index, widget.list);
             },
             leading: FloatingActionButton(
+              heroTag: 'btn$index',
               mini: true,
               backgroundColor: Color(0xffDB274A),
               child: new Image(
@@ -153,7 +154,10 @@ class _ExerciceListPageState extends State<ExerciceListPage>
         itemCount: widget.list.length,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => {},
+        heroTag: 'createExercice',
+        onPressed: (){
+          Navigator.of(context).pushNamed('/create');
+        },
         backgroundColor: Color(0xffDB274A),
         tooltip: 'Increment',
         child: Icon(Icons.add),
