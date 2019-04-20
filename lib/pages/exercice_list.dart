@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../tools/text.dart';
 import '../models/exercice.dart';
 import '../widgets/helpers/models.dart';
 import '../widgets/exercice/recovery_time.dart';
+import '../tools/text.dart';
 
 class ExerciceListPage extends StatefulWidget {
   final List<Exercice> list;
@@ -61,63 +61,83 @@ class _ExerciceListPageState extends State<ExerciceListPage>
             onTap: () {
               modalImageExercice(context, index, widget.list);
             },
-            subtitle: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 10.0),
-                  child: FlatButton(
-                    child: new Image(
-                      image: new AssetImage("assets/gym_07.png"),
-                      width: 40.0,
-                      height: 40.0,
-                      color: null,
-                      fit: BoxFit.scaleDown,
-                      alignment: Alignment.bottomLeft,
-                    ),
-                    onPressed: () {
-                      if (widget.list[index].start) {
-                        if (mounted) {
-                          setState(() {
-                            widget.list[index].start = false;
-                          });
-                        }
-                      } else {
-                        setState(() {
-                          widget.list[index].start = true;
-                        });
-                      }
-                    },
-                  ),
-                ),
-                RichText(
-                  text: TextSpan(
-                    style: TextStyle(
-                      fontSize: 21.0,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w400,
-                    ),
-                    children: <TextSpan>[
-                      TextSpan(text: widget.list[index].series.toString()),
-                      TextSpan(
-                        text: ' series ',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 14.0,
-                            color: Colors.grey[700]),
+            leading: FloatingActionButton(
+              mini: true,
+              backgroundColor: Color(0xffDB274A),
+              child: new Image(
+                image: new AssetImage("assets/gym_07.png"),
+                width: 40.0,
+                height: 40.0,
+                color: null,
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.bottomLeft,
+              ),
+              onPressed: () {
+                if (widget.list[index].start) {
+                  setState(() {
+                    widget.list[index].start = false;
+                  });
+                } else {
+                  setState(() {
+                    widget.list[index].start = true;
+                  });
+                }
+              },
+            ),
+            subtitle: Padding(
+              padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  RichText(
+                    text: TextSpan(
+                      style: TextStyle(
+                        fontSize: 21.0,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w400,
                       ),
-                      TextSpan(text: widget.list[index].repetitions.toString()),
-                      TextSpan(
-                        text: ' rep',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 14.0,
-                            color: Colors.grey[700]),
-                      ),
-                    ],
+                      children: <TextSpan>[
+                        TextSpan(text: weightNumber(widget.list[index].weight)),
+                        TextSpan(
+                          text: ' Kg ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w300,
+                              fontSize: 14.0,
+                              color: Colors.grey[700]),
+                        ),
+                      ],
+                    ),
                   ),
-                )
-              ],
+                  RichText(
+                    text: TextSpan(
+                      style: TextStyle(
+                        fontSize: 21.0,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w400,
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(text: widget.list[index].series.toString()),
+                        TextSpan(
+                          text: ' series ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w300,
+                              fontSize: 14.0,
+                              color: Colors.grey[700]),
+                        ),
+                        TextSpan(
+                            text: widget.list[index].repetitions.toString()),
+                        TextSpan(
+                          text: ' rep',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w300,
+                              fontSize: 14.0,
+                              color: Colors.grey[700]),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
             title: Padding(
               padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 5.0),
@@ -127,35 +147,6 @@ class _ExerciceListPageState extends State<ExerciceListPage>
                     fontSize: 18.0,
                     color: Colors.black54,
                     fontWeight: FontWeight.w300),
-              ),
-            ),
-            trailing: Container(
-              padding: EdgeInsets.all(20.0),
-              decoration: BoxDecoration(
-                border: BorderDirectional(
-                    start: BorderSide(width: 1.0, color: Colors.grey[400])),
-                color: Colors.white,
-              ),
-              child: RichText(
-                text: TextSpan(
-                  style: TextStyle(
-                    fontSize: 30.0,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: weightNumber(widget.list[index].weight),
-                    ),
-                    TextSpan(
-                      text: ' kg',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w300,
-                          fontSize: 10.0,
-                          color: Colors.grey[700]),
-                    ),
-                  ],
-                ),
               ),
             ),
           ),
