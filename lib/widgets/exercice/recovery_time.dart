@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:gymcontrol/models/timer.dart';
 import '../../models/exercice.dart';
 
-
 class RecoveryTime extends StatefulWidget {
-
   final List<Exercice> list;
   final int index;
   AnimationController controller;
 
-  RecoveryTime(this.list,this.index,this.controller);
-  
+  RecoveryTime(this.list, this.index, this.controller);
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -18,9 +16,7 @@ class RecoveryTime extends StatefulWidget {
   }
 }
 
-class _RecoveryTimeState extends State<RecoveryTime>
-     {
-
+class _RecoveryTimeState extends State<RecoveryTime> {
   String get timerString {
     Duration duration = widget.controller.duration * widget.controller.value;
     return '${duration.inMinutes}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
@@ -37,53 +33,42 @@ class _RecoveryTimeState extends State<RecoveryTime>
             alignment: FractionalOffset.center,
             child: AspectRatio(
               aspectRatio: 1.0,
-              child: GestureDetector(
-                onTap: () {
-                  if (widget.controller.isAnimating) {
-                    widget.controller.stop();
-                  } else {
-                    widget.controller.reverse(
-                        from: widget.controller.value == 0.0 ? 1.0 : widget.controller.value);
-                  }
-                },
-                child: Stack(
-                  children: <Widget>[
-                    Positioned.fill(
-                      child: AnimatedBuilder(
-                        animation: widget.controller,
-                        builder: (BuildContext context, Widget child) {
-                          return CustomPaint(
-                            painter: TimerPainter(
-                              animation: widget.controller,
-                              backgroundColor: Colors.grey[200],
-                              color: Color(0xffDB274A),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    Align(
-                      alignment: FractionalOffset.center,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          AnimatedBuilder(
+              child: Stack(
+                children: <Widget>[
+                  Positioned.fill(
+                    child: AnimatedBuilder(
+                      animation: widget.controller,
+                      builder: (BuildContext context, Widget child) {
+                        return CustomPaint(
+                          painter: TimerPainter(
                             animation: widget.controller,
-                            builder: (BuildContext context, Widget child) {
-                              return Text(
-                                timerString,
-                                style: TextStyle(
-                                    fontSize: 50.0,
-                                    fontWeight: FontWeight.w200),
-                              );
-                            },
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+                            backgroundColor: Colors.grey[200],
+                            color: Color(0xffDB274A),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  Align(
+                    alignment: FractionalOffset.center,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        AnimatedBuilder(
+                          animation: widget.controller,
+                          builder: (BuildContext context, Widget child) {
+                            return Text(
+                              timerString,
+                              style: TextStyle(
+                                  fontSize: 50.0, fontWeight: FontWeight.w200),
+                            );
+                          },
+                        )
+                      ],
+                    ),
+                  )
+                ],
               ),
             ),
           ),
@@ -120,7 +105,9 @@ class _RecoveryTimeState extends State<RecoveryTime>
                   widget.list[widget.index].increaseSeries();
                   widget.controller.reset();
                   widget.controller.reverse(
-                      from: widget.controller.value == 0.0 ? 1.0 : widget.controller.value);
+                      from: widget.controller.value == 0.0
+                          ? 1.0
+                          : widget.controller.value);
                 });
               },
               backgroundColor: Color(0xffDB274A),

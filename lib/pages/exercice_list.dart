@@ -24,7 +24,7 @@ class _ExerciceListPageState extends State<ExerciceListPage>
   void initState() {
     super.initState();
     controller =
-        AnimationController(vsync: this, duration: Duration(seconds: 180));
+        AnimationController(vsync: this, duration: Duration(seconds: 60));
   }
 
   Widget _containerStart(int index) {
@@ -87,27 +87,9 @@ class _ExerciceListPageState extends State<ExerciceListPage>
             subtitle: Padding(
               padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  RichText(
-                    text: TextSpan(
-                      style: TextStyle(
-                        fontSize: 21.0,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w400,
-                      ),
-                      children: <TextSpan>[
-                        TextSpan(text: weightNumber(widget.list[index].weight)),
-                        TextSpan(
-                          text: ' Kg ',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 14.0,
-                              color: Colors.grey[700]),
-                        ),
-                      ],
-                    ),
-                  ),
+                  
                   RichText(
                     text: TextSpan(
                       style: TextStyle(
