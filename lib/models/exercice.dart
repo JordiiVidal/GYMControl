@@ -9,7 +9,7 @@ class Exercice{
   double weight;
   bool start;
   bool recoveryTime;
-
+  
   Exercice({ @required this.name, @required this.weight, @required this.repetitions, @required this.series,@required this.actualSeries,@required this.start, @required this.recoveryTime});
 
   void increaseSeries(){

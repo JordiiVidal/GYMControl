@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../models/exercice.dart';
 import '../widgets/helpers/models.dart';
 import '../widgets/exercice/recovery_time.dart';
-import '../pages/exercice_create.dart';
 
 class ExerciceListPage extends StatefulWidget {
   final List<Exercice> list;
@@ -90,7 +89,6 @@ class _ExerciceListPageState extends State<ExerciceListPage>
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  
                   RichText(
                     text: TextSpan(
                       style: TextStyle(
@@ -147,6 +145,18 @@ class _ExerciceListPageState extends State<ExerciceListPage>
         backgroundColor: Color(0xffDB274A),
         title: Text('GYMControl'),
         centerTitle: true,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.person_pin,
+              color: Colors.white,
+              size: 30.0,
+            ),
+            onPressed: () {
+              Navigator.of(context).pushNamed('/user');
+            },
+          ),
+        ],
       ),
       body: ListView.builder(
         itemBuilder: _itemList,
@@ -155,7 +165,7 @@ class _ExerciceListPageState extends State<ExerciceListPage>
       ),
       floatingActionButton: FloatingActionButton(
         heroTag: 'createExercice',
-        onPressed: (){
+        onPressed: () {
           Navigator.of(context).pushNamed('/create');
         },
         backgroundColor: Color(0xffDB274A),

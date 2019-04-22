@@ -11,9 +11,9 @@ import '../../models/exercice.dart';
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Image.asset(
-                  'assets/gym_01.jpg',
-                ),
+                Image(
+                    image: new AssetImage("assets/gym_01.jpg"),
+                  ),
                 Padding(
                   padding: EdgeInsets.all(20.0),
                   child: Center(

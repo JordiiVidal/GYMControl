@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'models/exercice.dart';
 import 'pages/exercice_list.dart';
 import 'pages/exercice_create.dart';
+import 'pages/user.dart';
 
 
 void main() => runApp(MyApp());
@@ -44,6 +45,7 @@ class _MyAppState extends State<MyApp> {
       routes: {
         '/': (BuildContext context) => ExerciceListPage(list),
         '/create': (BuildContext context) => ExerciceCreate(),
+        '/user':(BuildContext context) => UserPage(),
       },
     );
   }
