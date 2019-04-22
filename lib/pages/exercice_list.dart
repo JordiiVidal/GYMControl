@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:gymcontrol/database/DBHelper.dart';
 import 'package:gymcontrol/models/exercice_db.dart';
+import 'package:gymcontrol/widgets/exercice/exercicie_fab.dart';
 import '../models/exercice.dart';
 import '../widgets/helpers/models.dart';
 import '../widgets/exercice/recovery_time.dart';
@@ -220,15 +221,7 @@ class _ExerciceListPageState extends State<ExerciceListPage>
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        heroTag: 'createExercice',
-        onPressed: () {
-          Navigator.of(context).pushNamed('/create');
-        },
-        backgroundColor: Color(0xffDB274A),
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
+      floatingActionButton: ExerciceFAB(),
     );
   }
 }
