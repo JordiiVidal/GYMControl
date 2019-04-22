@@ -18,7 +18,6 @@ dependencies:
   cupertino_icons: ^0.1.2
   path_provider: any
   sqflite: any
-  fluttertoast: any
 
 dev_dependencies:
   flutter_test:

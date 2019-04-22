@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 
 class ExerciceDB{
 
@@ -11,5 +10,4 @@ class ExerciceDB{
   String recoveryTime;
   bool start;
   
-  ExerciceDB(this.id, this.name, this.repetitions, this.series, this.actualSeries, this.weight, this.recoveryTime, this.start);
 }
